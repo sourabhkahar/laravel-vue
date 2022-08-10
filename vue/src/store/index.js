@@ -14,7 +14,13 @@ const store = createStore({
     },
     getters:{},
     actions:{},
-    mutations:{},
+    mutations:{
+        logout:(state)=>{
+            console.log(state)
+            state.users.data = {},
+            state.users.token = null
+        }
+    },
     modules:{}
 })
 
