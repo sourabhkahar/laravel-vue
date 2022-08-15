@@ -1,4 +1,4 @@
-L<template>
+<template>
   <div class="min-h-full">
     <Disclosure as="nav" class="bg-gray-800" >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,7 +25,7 @@ L<template>
                 <div>
                   <MenuButton class="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                     <span class="sr-only">Open user menu</span>
-                    <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                    <img class="h-8 w-8 rounded-full" src="" alt="" />
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -68,7 +68,7 @@ L<template>
             </button>
           </div>
           <div class="mt-3 px-2 space-y-1">
-            <a  @click="login" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer">logout</a>
+            <a  @click="logout" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer">logout</a>
           </div>
         </div>
       </DisclosurePanel>
@@ -85,7 +85,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
   const navigation = [
             { name: 'Dashboard', to: {name:'Dashboard'} },
-            { name: 'Team', to: {name:'Surveys'} }
+            { name: 'Surveys', to: {name:'Surveys'} }
     ]
   const userNavigation = [
         { name: 'Sign out', href: '#' },
@@ -110,15 +110,17 @@ export default{
         const router = useRouter()
 
         function logout(){
-            console.log(';kokok');
-
-          store.commit('logout');
-          router.push({
-            name:'Login'
-          })
+          store.dispatch('logout')
+                .then(()=>{
+                  router.push({
+                    name:'Login'
+                  })
+                })
         }
         return{
-            user:computed(() => store.state.users.data),
+            user:computed(() => {
+                store.state.users.data
+            }),
             navigation,
             userNavigation,
             logout
